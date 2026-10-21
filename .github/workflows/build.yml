@@ -25,8 +25,13 @@ jobs:
           distribution: temurin
           java-version: '17'
 
-      - name: Set up Android SDK
-        uses: android-actions/setup-android@v3
+      # GitHub hosted ubuntu runners already include the Android SDK
+      # (ANDROID_HOME preconfigured, licenses accepted); AGP downloads
+      # any missing platform/build-tool automatically.
+      - name: Verify Android SDK
+        run: |
+          echo "ANDROID_HOME=$ANDROID_HOME"
+          sdkmanager --version || true
 
       - name: Set up Gradle 8.9
         uses: gradle/actions/setup-gradle@v4
